@@ -1,19 +1,19 @@
 {
   "swagger": "2.0",
   "info": {
-    "description": "Your first API with Amazon API Gateway. This is a sample API that integrates via HTTP with our demo Pet Store endpoints",
-    "title": "PetStore"
+    "description": "Your first API with Amazon API Gateway. This is a sample API that integrates via HTTP with Matillion endpoints",
+    "title": "Matillion"
   },
   "schemes": [
-    "https"
+    "http"
   ],
   "paths": {
     "/": {
       "get": {
         "tags": [
-          "pets"
+          "groups"
         ],
-        "description": "PetStore HTML web page containing API usage information",
+        "description": "Matillion HTML web page containing API usage information",
         "consumes": [
           "application/json"
         ],
@@ -51,12 +51,12 @@
         }
       }
     },
-    "/pets": {
+    "/group": {
       "get": {
         "tags": [
-          "pets"
+          "group"
         ],
-        "summary": "List all pets",
+        "summary": "List all groups",
         "produces": [
           "application/json"
         ],
@@ -64,7 +64,7 @@
           {
             "name": "type",
             "in": "query",
-            "description": "The type of pet to retrieve",
+            "description": "The type of group to retrieve",
             "required": false,
             "type": "string"
           },
@@ -106,57 +106,6 @@
           "uri": "http://petstore-demo-endpoint.execute-api.com/petstore/pets",
           "passthroughBehavior": "when_no_match",
           "httpMethod": "GET",
-          "type": "http"
-        }
-      },
-      "post": {
-        "tags": [
-          "pets"
-        ],
-        "operationId": "CreatePet",
-        "summary": "Create a pet",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "NewPet",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/NewPet"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "schema": {
-              "$ref": "#/definitions/NewPetResponse"
-            },
-            "headers": {
-              "Access-Control-Allow-Origin": {
-                "type": "string",
-                "description": "URI that may access the resource"
-              }
-            }
-          }
-        },
-        "x-amazon-apigateway-integration": {
-          "responses": {
-            "default": {
-              "statusCode": "200",
-              "responseParameters": {
-                "method.response.header.Access-Control-Allow-Origin": "'*'"
-              }
-            }
-          },
-          "uri": "http://petstore-demo-endpoint.execute-api.com/petstore/pets",
-          "passthroughBehavior": "when_no_match",
-          "httpMethod": "POST",
           "type": "http"
         }
       },
@@ -208,21 +157,21 @@
         }
       }
     },
-    "/pets/{petId}": {
+    "/group/{groupName}": {
       "get": {
         "tags": [
-          "pets"
+          "group"
         ],
-        "summary": "Info for a specific pet",
-        "operationId": "GetPet",
+        "summary": "Info for a specific Group",
+        "operationId": "GetGroup",
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "petId",
+            "name": "groupName",
             "in": "path",
-            "description": "The id of the pet to retrieve",
+            "description": "The id of the group name to retrieve",
             "required": true,
             "type": "string"
           }
@@ -231,7 +180,7 @@
           "200": {
             "description": "Successful operation",
             "schema": {
-              "$ref": "#/definitions/Pet"
+              "$ref": "#/definitions/Group"
             },
             "headers": {
               "Access-Control-Allow-Origin": {
@@ -251,9 +200,9 @@
             }
           },
           "requestParameters": {
-            "integration.request.path.petId": "method.request.path.petId"
+            "integration.request.path.groupName": "method.request.path.groupName"
           },
-          "uri": "http://petstore-demo-endpoint.execute-api.com/petstore/pets/{petId}",
+          "uri": "http://petstore-demo-endpoint.execute-api.com/petstore/pets/{groupName}",
           "passthroughBehavior": "when_no_match",
           "httpMethod": "GET",
           "type": "http"
@@ -268,9 +217,9 @@
         ],
         "parameters": [
           {
-            "name": "petId",
+            "name": "groupName",
             "in": "path",
-            "description": "The id of the pet to retrieve",
+            "description": "The id of the group to retrieve",
             "required": true,
             "type": "string"
           }
@@ -318,7 +267,7 @@
     }
   },
   "definitions": {
-    "Pets": {
+    "Group": {
       "type": "array",
       "items": {
         "$ref": "#/definitions/Pet"
@@ -327,10 +276,10 @@
     "Empty": {
       "type": "object"
     },
-    "NewPetResponse": {
+    "NewGroupResponse": {
       "type": "object",
       "properties": {
-        "pet": {
+        "group": {
           "$ref": "#/definitions/Pet"
         },
         "message": {
@@ -338,7 +287,7 @@
         }
       }
     },
-    "Pet": {
+    "Group": {
       "type": "object",
       "properties": {
         "id": {
@@ -352,7 +301,7 @@
         }
       }
     },
-    "NewPet": {
+    "NewGroup": {
       "type": "object",
       "properties": {
         "type": {
@@ -363,7 +312,7 @@
         }
       }
     },
-    "PetType": {
+    "GroupType": {
       "type": "string",
       "enum": [
         "dog",
@@ -384,7 +333,7 @@
         },
         "properties": {
           "info": {
-            "description": "Your first API with Amazon API Gateway. This is a sample API that integrates via HTTP with our demo Pet Store endpoints"
+            "description": "Your first API with Amazon API Gateway. This is a sample API that integrates via HTTP with our demo Group endpoints"
           }
         }
       },
@@ -395,22 +344,22 @@
         },
         "properties": {
           "tags": [
-            "pets"
+            "group"
           ],
-          "description": "PetStore HTML web page containing API usage information"
+          "description": "Matillion HTML web page containing API usage information"
         }
       },
       {
         "location": {
           "type": "METHOD",
-          "path": "/pets/{petId}",
+          "path": "/group/{groupName}",
           "method": "GET"
         },
         "properties": {
           "tags": [
-            "pets"
+            "group"
           ],
-          "summary": "Info for a specific pet"
+          "summary": "Info for a specific group"
         }
       },
       {
@@ -421,39 +370,39 @@
         },
         "properties": {
           "tags": [
-            "pets"
+            "group"
           ],
-          "summary": "List all pets"
+          "summary": "List all group"
         }
       },
       {
         "location": {
           "type": "METHOD",
-          "path": "/pets",
+          "path": "/group",
           "method": "POST"
         },
         "properties": {
           "tags": [
-            "pets"
+            "group"
           ],
-          "summary": "Create a pet"
+          "summary": "Create a group"
         }
       },
       {
         "location": {
           "type": "PATH_PARAMETER",
-          "path": "/pets/{petId}",
+          "path": "/group/{groupName}",
           "method": "*",
-          "name": "petId"
+          "name": "groupName"
         },
         "properties": {
-          "description": "The id of the pet to retrieve"
+          "description": "The id of the group to retrieve"
         }
       },
       {
         "location": {
           "type": "QUERY_PARAMETER",
-          "path": "/pets",
+          "path": "/group",
           "method": "GET",
           "name": "page"
         },
@@ -464,22 +413,22 @@
       {
         "location": {
           "type": "QUERY_PARAMETER",
-          "path": "/pets",
+          "path": "/group",
           "method": "GET",
           "name": "type"
         },
         "properties": {
-          "description": "The type of pet to retrieve"
+          "description": "The type of group to retrieve"
         }
       },
       {
         "location": {
           "type": "REQUEST_BODY",
-          "path": "/pets",
+          "path": "/group",
           "method": "POST"
         },
         "properties": {
-          "description": "Pet object that needs to be added to the store"
+          "description": "group object that needs to be added to the store"
         }
       },
       {

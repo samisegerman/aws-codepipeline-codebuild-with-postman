@@ -1,0 +1,72 @@
+{
+	"info": {
+		"_postman_id": "67d0eef1-f67d-4c81-989f-cc782fc1030b",
+		"name": "MatillionAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "list groups",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "02a1b565-7597-41c8-a210-4081e137ee40",
+						"exec": [
+							"/**",
+							" * ",
+							" */ ",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.expect(pm.response).to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Is valid response with json array in body\", function () {",
+							"    ",
+							"    // assert that the status code is 200",
+							"    pm.response.to.be.ok; // info, success, redirection, clientError,  serverError, are other variants",
+							"     ",
+							"    // assert that the response has a valid JSON body",
+							"    pm.response.to.be.withBody;",
+							"     ",
+							"    pm.response.to.be.json; // this assertion also checks if a body  exists, so the above check is not needed",
+							"     ",
+							"    //make sure we have a valid json array",
+							"    pm.expect(pm.response.json()).to.be.an('array').but.not.an('object');",
+							"    ",
+							"});",
+							"",
+							"pm.test(\"Has Content-Type header\", function () {",
+							"    pm.expect(responseHeaders.hasOwnProperty(\"Content-Type\"));",
+							"});",
+							"",
+							"pm.test(\"Is response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"",
+							"",
+							"//https://www.chaijs.com/api/bdd/#method_a",
+							"//pm.test('is valid Array', () => pm.expect(pm.response.json()).to.be.an('array').but.not.an('object'))"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{apigw-root}}/group",
+					"host": [
+						"{{apigw-root}}"
+					],
+					"path": [
+						"group"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

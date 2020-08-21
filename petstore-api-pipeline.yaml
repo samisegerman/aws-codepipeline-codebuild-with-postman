@@ -1,4 +1,4 @@
-AWSTemplateFormatVersion: "2010-09-09"
+matillionAWSTemplateFormatVersion: "2010-09-09"
 Description: Code pipeline for automated api functional testing
 
 Parameters:
@@ -176,11 +176,11 @@ Resources:
           Fn::Sub: ${AWS::StackName}-codepipeline-artifact-bucket
 
   #code build - api deployment using SAM (see buildspec.yml)
-  PetStoreAPISAMCodeBuildProject:
+  MatillionAPISAMCodeBuildProject:
     Type: AWS::CodeBuild::Project
     Properties:
-      Name: petstore-api-stack-project
-      Description: CodeBuild Project using AWS SAM to deploy PetStore API
+      Name: matillion-api-stack-project
+      Description: CodeBuild Project using AWS SAM to deploy Matillion API
       ServiceRole:
         Fn::GetAtt: [ CodeBuildServiceRole, Arn ]
       Artifacts:
@@ -188,7 +188,7 @@ Resources:
         Location:
           Ref: CodePipelineArtifactBucket
         Name:
-          Fn::Sub: ${AWS::StackName}-petstore-api-stack-codebuild-project
+          Fn::Sub: ${AWS::StackName}-matillion-api-stack-codebuild-project
       Environment:
         Type: LINUX_CONTAINER
         ComputeType: BUILD_GENERAL1_SMALL
@@ -201,12 +201,12 @@ Resources:
           - '/'
           - !Ref GitHubRepositoryName
         Type:  GITHUB
-        BuildSpec: 01api/petstore-api-buildspec.yml
+        BuildSpec: 01api/matillion-api-buildspec.yml
       TimeoutInMinutes: 10
       Tags:
       - Key: Name
         Value:
-          Fn::Sub: ${AWS::StackName}-petstore-api-stack-project
+          Fn::Sub: ${AWS::StackName}-matillion-api-stack-project
 
   #code build - api testing using Newman to execute Postman test def (see buildspec.yml)
   PostmanNewmanCodeBuildProject:
@@ -248,12 +248,12 @@ Resources:
             Fn::Sub: ${AWS::StackName}-newman-project
 
 
-  PetStoreAPIPipeline:
+  MatillionAPIPipeline:
     Type: "AWS::CodePipeline::Pipeline"
     DependsOn:
-      - PetStoreAPISAMCodeBuildProject
+      - MatillionAPISAMCodeBuildProject
     Properties:
-      Name: petstore-api-pipeline
+      Name: matillion-api-pipeline
       RoleArn:
         Fn::GetAtt: [ CodePipelineTrustRole, Arn ]
       ArtifactStore:
@@ -262,7 +262,7 @@ Resources:
       Stages:
       - Name: Source
         Actions:
-        - Name: CheckoutPetStoreAPISource
+        - Name: CheckoutMatillionAPISource
           ActionTypeId:
             Owner: ThirdParty
             Category: Source
@@ -276,23 +276,23 @@ Resources:
             OAuthToken: !Ref GitHubToken
           InputArtifacts: []
           OutputArtifacts:
-          - Name: 'PetStoreAPI-SourceArtifact'
+          - Name: 'MatillionAPI-SourceArtifact'
           RunOrder: 1
 
       - Name: Build
         Actions:
-        - Name: BuildPetStoreAPI
+        - Name: BuildMatillionAPI
           ActionTypeId:
             Owner: AWS
             Category: Build
             Version: 1
             Provider: CodeBuild
           Configuration:
-            ProjectName: !Ref PetStoreAPISAMCodeBuildProject
+            ProjectName: !Ref MatillionAPISAMCodeBuildProject
           InputArtifacts:
-          - Name: 'PetStoreAPI-SourceArtifact'
+          - Name: 'MatillionAPI-SourceArtifact'
           OutputArtifacts:
-          - Name: 'PetStoreAPI-BuildArtifact'
+          - Name: 'MatillionAPI-BuildArtifact'
           RunOrder: 1
 
       - Name: Deploy
@@ -306,17 +306,17 @@ Resources:
           Configuration:
             TemplatePath: !Join
             - ''
-            - - 'PetStoreAPI-BuildArtifact'
-              - '::01api/petstore-api-output.yaml'
+            - - 'MatillionAPI-BuildArtifact'
+              - '::01api/matillion-api-output.yaml'
             ActionMode: CHANGE_SET_REPLACE
             Capabilities: CAPABILITY_IAM
             ChangeSetName: pipeline-changeset
             RoleArn: !GetAtt
             - CloudFormationTrustRole
             - Arn
-            StackName: petstore-api-stack
+            StackName: matillion-api-stack
           InputArtifacts:
-          - Name: 'PetStoreAPI-BuildArtifact'
+          - Name: 'MatillionAPI-BuildArtifact'
           OutputArtifacts: []
           RunOrder: 1
 
@@ -329,7 +329,7 @@ Resources:
           Configuration:
             ActionMode: CHANGE_SET_EXECUTE
             ChangeSetName: pipeline-changeset
-            StackName: petstore-api-stack
+            StackName: matillion-api-stack
           InputArtifacts: []
           OutputArtifacts: []
           RunOrder: 2
@@ -337,7 +337,7 @@ Resources:
       # https://docs.aws.amazon.com/codepipeline/latest/userguide/actions-invoke-lambda-function.html
       - Name: Test
         Actions:
-        - Name: TestPetStoreAPI
+        - Name: TestMatillionAPI
           ActionTypeId:
             Owner: AWS
             Category: Build
@@ -346,12 +346,12 @@ Resources:
           Configuration:
             ProjectName: !Ref PostmanNewmanCodeBuildProject
           InputArtifacts:
-            - Name: 'PetStoreAPI-SourceArtifact'
+            - Name: 'MatillionAPI-SourceArtifact'
           OutputArtifacts:
-            - Name: 'PetStoreAPI-TestArtifact'
+            - Name: 'MatillioneAPI-TestArtifact'
           RunOrder: 1
 
-  PetStorePostmanPipelineRunnerRole:
+  MatillionPostmanPipelineRunnerRole:
     Type: AWS::IAM::Role
     Properties:
       AssumeRolePolicyDocument:
