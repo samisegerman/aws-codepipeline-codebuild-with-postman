@@ -134,6 +134,8 @@ Resources:
             Resource:
             - Fn::Sub: arn:aws:s3:::${AWS::StackName}-codepipeline-artifact-bucket-${AWS::AccountId}/*
             - Fn::Sub: arn:aws:s3:::${AWS::StackName}-codepipeline-artifact-bucket-${AWS::AccountId}
+            - Fn::Sub: arn:aws:s3:::*-codepipeline-artifact-bucket-${AWS::AccountId}/*
+            - Fn::Sub: arn:aws:s3:::*-codepipeline-artifact-bucket-${AWS::AccountId}
             - Fn::Sub: arn:aws:s3:::${BucketRoot}/*
             - Fn::Sub: arn:aws:s3:::${BucketRoot}
           -
