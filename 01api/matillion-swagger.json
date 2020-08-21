@@ -103,7 +103,7 @@
             "integration.request.querystring.page": "method.request.querystring.page",
             "integration.request.querystring.type": "method.request.querystring.type"
           },
-          "uri": "http://petstore-demo-endpoint.execute-api.com/petstore/pets",
+          "uri": "http://matillion-demo-endpoint.execute-api.com/matillion/pets",
           "passthroughBehavior": "when_no_match",
           "httpMethod": "GET",
           "type": "http"
@@ -202,7 +202,7 @@
           "requestParameters": {
             "integration.request.path.groupName": "method.request.path.groupName"
           },
-          "uri": "http://petstore-demo-endpoint.execute-api.com/petstore/pets/{groupName}",
+          "uri": "http://matillion-demo-endpoint.execute-api.com/matillion/pets/{groupName}",
           "passthroughBehavior": "when_no_match",
           "httpMethod": "GET",
           "type": "http"
@@ -365,7 +365,7 @@
       {
         "location": {
           "type": "METHOD",
-          "path": "/pets",
+          "path": "/group",
           "method": "GET"
         },
         "properties": {
