@@ -1,4 +1,4 @@
-matillionAWSTemplateFormatVersion: "2010-09-09"
+AWSTemplateFormatVersion: "2010-09-09"
 Description: Code pipeline for automated api functional testing
 
 Parameters:
