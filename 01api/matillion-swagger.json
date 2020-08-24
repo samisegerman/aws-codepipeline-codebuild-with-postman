@@ -103,7 +103,7 @@
             "integration.request.querystring.page": "method.request.querystring.page",
             "integration.request.querystring.type": "method.request.querystring.type"
           },
-          "uri": "http://matillion-demo-endpoint.execute-api.com/matillion/pets",
+          "uri": "http://ec2-3-250-236-65.eu-west-1.compute.amazonaws.com/rest/v1",
           "passthroughBehavior": "when_no_match",
           "httpMethod": "GET",
           "type": "http"
@@ -202,7 +202,7 @@
           "requestParameters": {
             "integration.request.path.groupName": "method.request.path.groupName"
           },
-          "uri": "http://matillion-demo-endpoint.execute-api.com/matillion/pets/{groupName}",
+          "uri": "http://ec2-3-250-236-65.eu-west-1.compute.amazonaws.com/rest/v1/{groupName}",
           "passthroughBehavior": "when_no_match",
           "httpMethod": "GET",
           "type": "http"
