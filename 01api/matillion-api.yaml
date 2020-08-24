@@ -12,6 +12,6 @@ Outputs:
     MatillionAPI:
       Description: "Root API endpoint URL for test stage"
       #Value: !Sub "https://${MatillionAPI}.execute-api.${AWS::Region}.amazonaws.com/prod"
-      Value: !Sub "http://ec2-34-253-225-241.eu-west-1.compute.amazonaws.com/rest/v1"
+      Value: !Sub "http://ec2-3-250-236-65.eu-west-1.compute.amazonaws.com/rest/v1"
       Export:
         Name: MatillionAPIRoot
